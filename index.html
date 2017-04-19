@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <!-- based on http://bl.ocks.org/natemiller/7dec148bb6aab897e561 -->
+<!--  TODO:
+a) rescale Y axis after zoom, so that max. in current view is taken into account, not max. in whole data
+b) add captions for lines, say like in https://bl.ocks.org/mbostock/3884955
+c) add selectors for data catalogs: all by default, click will select/unselect concrete catalog (say like in http://dataaddict.fr/prenoms/#alain,bernard), rescale Y after each click
+-->
 <meta charset="utf-8">
 <style>
  
@@ -44,7 +49,7 @@ var margin = {top: 10, right: 10, bottom: 100, left: 40},
  
 var color = d3.scale.category10();
  
-var parseDate = d3.time.format("%Y%m").parse;
+var parseDate = d3.time.format("%Y%m%d").parse;
  
 var x = d3.time.scale().range([0, width]),
     x2 = d3.time.scale().range([0, width]),
@@ -60,16 +65,16 @@ var brush = d3.svg.brush()
     .on("brush", brush);
  
 var line = d3.svg.line()
-    .defined(function(d) { return !isNaN(d.temperature); })
+    .defined(function(d) { return !isNaN(d.datasetCount) && d.datasetCount >= 0; })
     .interpolate("cubic")
     .x(function(d) { return x(d.date); })
-    .y(function(d) { return y(d.temperature); });
+    .y(function(d) { return y(d.datasetCount); });
  
 var line2 = d3.svg.line()
-    .defined(function(d) { return !isNaN(d.temperature); })
+    .defined(function(d) { return !isNaN(d.datasetCount) && d.datasetCount >= 0; })
     .interpolate("cubic")
     .x(function(d) {return x2(d.date); })
-    .y(function(d) {return y2(d.temperature); });
+    .y(function(d) {return y2(d.datasetCount); });
  
 var svg = d3.select("body").append("svg")
     .attr("width", width + margin.left + margin.right)
@@ -87,7 +92,7 @@ var focus = svg.append("g")
 var context = svg.append("g")
   .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
  
-d3.csv("climate4.csv", function(error, data) {
+d3.csv("data-catalog-stats-all-dataset_count.csv", function(error, data) {
  
   color.domain(d3.keys(data[0]).filter(function(key) { return key !== "date"; }));
  
@@ -99,14 +104,14 @@ d3.csv("climate4.csv", function(error, data) {
       return {
         name: name,
         values: data.map(function(d) {
-          return {date: d.date, temperature: +d[name]};
+          return {date: d.date, datasetCount: +d[name]};
         })
       };
     });
  
     x.domain(d3.extent(data, function(d) { return d.date; }));
-    y.domain([d3.min(sources, function(c) { return d3.min(c.values, function(v) { return v.temperature; }); }),
-              d3.max(sources, function(c) { return d3.max(c.values, function(v) { return v.temperature; }); }) ]);
+    y.domain([d3.min(sources, function(c) { return d3.min(c.values, function(v) { return v.datasetCount; }); }),
+              d3.max(sources, function(c) { return d3.max(c.values, function(v) { return v.datasetCount; }); }) ]);
     x2.domain(x.domain());
     y2.domain(y.domain());
     
