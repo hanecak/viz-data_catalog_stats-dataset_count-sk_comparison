@@ -161,6 +161,8 @@ d3.csv("data-catalog-stats-all-dataset_count.csv", function(error, data) {
  
 function brush() {
   x.domain(brush.empty() ? x2.domain() : brush.extent());
+  // FIXME: we need to find the actual min and max values for current zoom
+  y.domain([100, 500]);
   focus.selectAll("path.line").attr("d",  function(d) {return line(d.values)});
   focus.select(".x.axis").call(xAxis);
   focus.select(".y.axis").call(yAxis);
