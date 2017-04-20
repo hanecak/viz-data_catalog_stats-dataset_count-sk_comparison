@@ -45,8 +45,8 @@ svg {
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
  
-var margin = {top: 10, right: 10, bottom: 100, left: 40},
-    margin2 = {top: 430, right: 10, bottom: 20, left: 40},
+var margin = {top: 10, right: 10, bottom: 100, left: 75},
+    margin2 = {top: 430, right: 10, bottom: 20, left: 75},
     width = 960 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom,
     height2 = 500 - margin2.top - margin2.bottom;
@@ -187,7 +187,7 @@ d3.csv("data-catalog-stats-all-dataset_count.csv", function(error, data) {
       .attr("transform", "rotate(-90)")
       .attr("y",-margin.top*3.2)
       .attr("x",-height/2)
-      .attr("dy", ".71em")
+      .attr("dy", "-2.5em")
       .style("text-anchor", "middle")
       .text("Number of datasets");
         
