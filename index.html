@@ -146,10 +146,12 @@ d3.csv("data-catalog-stats-all-dataset_count.csv", function(error, data) {
         .attr("clip-path", "url(#clip)")
         .attr("id", function(d, i) { return "path-" + d.name; });
     
+    // FIXME: we need to convert '.' to '_' in d.name for "path-xxx" as dots in data catalog names break attribute naming
     var focustext = focuslineGroups.append("text")
       .datum(function(d) { return {name: d.name, value: d.values[d.values.length-60]}; })
       .attr("transform", function(d) { return "translate(20,10)"; })
-      .attr("x", function(d,i) {return (i+2)*80;})
+      .attr("x", function(d,i) {return (i % 5) *150;})
+      .attr("y", function(d,i) {return Math.floor(i / 5) * 15;})
       .attr("dy", ".35em")
       .style("stroke",function(d) {return color(d.name);})
       .style("fill",function(d) {return color(d.name);})
@@ -169,8 +171,8 @@ d3.csv("data-catalog-stats-all-dataset_count.csv", function(error, data) {
       .style("stroke-width", 2.0);
     })
       .text(function(d) { return d.name; })
-      .attr("font-family","sans-serif")
-      .attr("font-size","11px")
+      //.attr("font-family","sans-serif")
+      //.attr("font-size","11px")
       .attr("id", function(d, i) { return "text-" + d.name; });
     
     focus.append("g")
