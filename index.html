@@ -4,7 +4,6 @@
 	http://bl.ocks.org/natemiller/fd4744a28952627d7150
 -->
 <!--  TODO:
-a) rescale Y axis after zoom, so that max. in current view is taken into account, not max. in whole data
 c) add selectors for data catalogs: all by default, click will select/unselect concrete catalog (say like in http://dataaddict.fr/prenoms/#alain,bernard), rescale Y after each click
 -->
 <meta charset="utf-8">
@@ -95,15 +94,16 @@ var focus = svg.append("g")
 var context = svg.append("g")
   .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
  
+var sources = [];
 d3.csv("data-catalog-stats-all-dataset_count.csv", function(error, data) {
- 
+
   color.domain(d3.keys(data[0]).filter(function(key) { return key !== "date"; }));
  
     data.forEach(function(d) {
       d.date = parseDate(d.date);
     });
  
-  var sources = color.domain().map(function(name) {
+  sources = color.domain().map(function(name) {
       return {
         name: name,
         values: data.map(function(d) {
@@ -146,6 +146,7 @@ d3.csv("data-catalog-stats-all-dataset_count.csv", function(error, data) {
         .attr("id", function(d, i) { return "path-" + d.name; });
     
     // FIXME: we need to convert '.' to '_' in d.name for "path-xxx" as dots in data catalog names break attribute naming
+    // fix can be considered as sort-of-implementation for TODO item c)
     var focustext = focuslineGroups.append("text")
       .datum(function(d) { return {name: d.name, value: d.values[d.values.length-60]}; })
       .attr("transform", function(d) { return "translate(20,10)"; })
@@ -217,8 +218,11 @@ d3.csv("data-catalog-stats-all-dataset_count.csv", function(error, data) {
  
 function brush() {
   x.domain(brush.empty() ? x2.domain() : brush.extent());
-  // FIXME: we need to find the actual min and max values for current zoom
-  y.domain([100, 500]);
+
+  // FIXME: filter 'sources' just once, then find min and max
+  y.domain([d3.min(sources, function(c) { return d3.min(c.values, function(v) { if ( (v.date >= x.domain()[0]) && (v.date <= x.domain()[1]) ) { return v.datasetCount; } }); }),
+            d3.max(sources, function(c) { return d3.max(c.values, function(v) { if ( (v.date >= x.domain()[0]) && (v.date <= x.domain()[1]) ) { return v.datasetCount; } }); }) ]);
+
   focus.selectAll("path.line").attr("d",  function(d) {return line(d.values)});
   focus.select(".x.axis").call(xAxis);
   focus.select(".y.axis").call(yAxis);
