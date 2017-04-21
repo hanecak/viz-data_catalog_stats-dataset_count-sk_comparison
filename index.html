@@ -143,10 +143,8 @@ d3.csv("data-catalog-stats-all-dataset_count.csv", function(error, data) {
             .style("stroke-width", 2.0)
           })
         .attr("clip-path", "url(#clip)")
-        .attr("id", function(d, i) { return "path-" + d.name; });
+        .attr("id", function(d, i) { return "path-" + d.name.replace(/\./g, '-'); });
     
-    // FIXME: we need to convert '.' to '_' in d.name for "path-xxx" as dots in data catalog names break attribute naming
-    // fix can be considered as sort-of-implementation for TODO item c)
     var focustext = focuslineGroups.append("text")
       .datum(function(d) { return {name: d.name, value: d.values[d.values.length-60]}; })
       .attr("transform", function(d) { return "translate(20,10)"; })
@@ -156,14 +154,14 @@ d3.csv("data-catalog-stats-all-dataset_count.csv", function(error, data) {
       .style("stroke",function(d) {return color(d.name);})
       .style("fill",function(d) {return color(d.name);})
       .on("mouseover", function(d){
-    d3.select('#path-' + d.name)
+    d3.select('#path-' + d.name.replace(/\./g, '-'))
        .style("stroke",function(d) {return color(d.name);})
        .style("stroke-opacity", 1.0)
        .style("stroke-width", 2.5);
        this.parentNode.parentNode.appendChild(this.parentNode);
       })
       .on("mouseout", function(d) {
-    d3.select('#path-' + d.name)
+    d3.select('#path-' + d.name.replace(/\./g, '-'))
       .transition()
       .duration(750)
       .style("stroke",function(d) {return color(d.name);})
@@ -173,7 +171,7 @@ d3.csv("data-catalog-stats-all-dataset_count.csv", function(error, data) {
       .text(function(d) { return d.name; })
       //.attr("font-family","sans-serif")
       //.attr("font-size","11px")
-      .attr("id", function(d, i) { return "text-" + d.name; });
+      .attr("id", function(d, i) { return "text-" + d.name.replace(/\./g, '-'); });
     
     focus.append("g")
         .attr("class", "x axis")
