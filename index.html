@@ -32,7 +32,7 @@ svg {
 
 .line {
   fill: none;
-  stroke-width: 2px;
+  stroke-width: 1px;
 }
 
 </style>
@@ -124,21 +124,23 @@ d3.csv("data-catalog-stats-all-dataset_count.csv", function(error, data) {
         .attr("class","line")
         .attr("d", function(d) { return line(d.values); })
         .style("stroke",function(d) {return color(d.name);})
-        .style("stroke-opacity",0.5)
+        .style("stroke-opacity", 0.5)
       .on("mouseover", function(d){
         d3.select(this)
           .style("stroke",function(d) {return color(d.name);})
-          .style("stroke-opacity",1.0)
-          .style("stroke-width", 2.5)
+          .style("stroke-opacity", 1.0)
+          .style("stroke-width", 3.0)
           this.parentNode.parentNode.appendChild(this.parentNode);    
       })
       .on("mouseout", function(d) {
+          if (selectedCatalogs.indexOf(d.name) >= 0)
+              return;
           d3.select(this)
             .transition()
-            .duration(750)
+            .duration(500)
             .style("stroke",function(d) {return color(d.name);})
             .style("stroke-opacity", 0.5)
-            .style("stroke-width", 2.0)
+            .style("stroke-width", 1.0)
           })
         .attr("clip-path", "url(#clip)")
         .attr("id", function(d, i) { return "path-" + d.name.replace(/\./g, '-'); });
@@ -155,7 +157,7 @@ d3.csv("data-catalog-stats-all-dataset_count.csv", function(error, data) {
     d3.select('#path-' + d.name.replace(/\./g, '-'))
        .style("stroke",function(d) {return color(d.name);})
        .style("stroke-opacity", 1.0)
-       .style("stroke-width", 2.5);
+       .style("stroke-width", 3.0);
        this.parentNode.parentNode.appendChild(this.parentNode);
       })
       .on("mouseout", function(d) {
@@ -163,10 +165,10 @@ d3.csv("data-catalog-stats-all-dataset_count.csv", function(error, data) {
     	return;
     d3.select('#path-' + d.name.replace(/\./g, '-'))
       .transition()
-      .duration(750)
+      .duration(500)
       .style("stroke",function(d) {return color(d.name);})
       .style("stroke-opacity", 0.5)
-      .style("stroke-width", 2.0);
+      .style("stroke-width", 1.0);
     })
       .on("click", function(d) {
     console.debug("click on " + d.name);
@@ -185,7 +187,7 @@ d3.csv("data-catalog-stats-all-dataset_count.csv", function(error, data) {
     		d3.select('#path-' + d.name.replace(/\./g, '-'))
     	       .style("stroke",function(d) {return color(d.name);})
     	       .style("stroke-opacity", 1.0)
-    	       .style("stroke-width", 2.5);
+    	       .style("stroke-width", 3.0);
     		d3.select('#text-' + d.name.replace(/\./g, '-'))
  	           .style("text-decoration", "underline");
     	}
@@ -193,10 +195,10 @@ d3.csv("data-catalog-stats-all-dataset_count.csv", function(error, data) {
     		// disable item
     		d3.select('#path-' + d.name.replace(/\./g, '-'))
     	      .transition()
-    	      .duration(750)
+    	      .duration(500)
     	      .style("stroke",function(d) {return color(d.name);})
     	      .style("stroke-opacity", 0.5)
-    	      .style("stroke-width", 2.0);
+    	      .style("stroke-width", 1.0);
     		d3.select('#text-' + d.name.replace(/\./g, '-'))
 	           .style("text-decoration", "none");
     	}

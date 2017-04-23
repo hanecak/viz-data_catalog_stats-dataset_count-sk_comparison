@@ -12,5 +12,7 @@ TODO
 
 # TODO
 
-- move caption to the right, like in https://bl.ocks.org/mbostock/3884955
+- tip with catalog name if mouse hovers over line, possibly with also a data and value of nearest point
+- selected datacatalogs in URI, to allow deep-linking and sharing of custom selections
+- maybe move caption to the right, like in https://bl.ocks.org/mbostock/3884955
 - ...
