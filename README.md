@@ -16,3 +16,7 @@ TODO
 - selected datacatalogs in URI, to allow deep-linking and sharing of custom selections
 - maybe move caption to the right, like in https://bl.ocks.org/mbostock/3884955
 - ...
+
+# DEV tips
+
+- loading of CSV requires HTTP, you can setup a primitive server by running `python -m SimpleHTTPServer` in the directory with this project
