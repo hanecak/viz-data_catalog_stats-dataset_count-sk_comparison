@@ -12,6 +12,5 @@ TODO
 
 # TODO
 
-- make items (catalogs) selectable, like in http://dataaddict.fr/prenoms/#alain,bernard,franck
 - move caption to the right, like in https://bl.ocks.org/mbostock/3884955
 - ...

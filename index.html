@@ -3,9 +3,6 @@
 	http://bl.ocks.org/natemiller/7dec148bb6aab897e561
 	http://bl.ocks.org/natemiller/fd4744a28952627d7150
 -->
-<!--  TODO:
-c) add selectors for data catalogs: all by default, click will select/unselect concrete catalog (say like in http://dataaddict.fr/prenoms/#alain,bernard), rescale Y after each click
--->
 <meta charset="utf-8">
 <style>
  
@@ -95,6 +92,7 @@ var context = svg.append("g")
   .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
  
 var sources = [];
+var selectedCatalogs = [];
 d3.csv("data-catalog-stats-all-dataset_count.csv", function(error, data) {
 
   color.domain(d3.keys(data[0]).filter(function(key) { return key !== "date"; }));
@@ -161,12 +159,58 @@ d3.csv("data-catalog-stats-all-dataset_count.csv", function(error, data) {
        this.parentNode.parentNode.appendChild(this.parentNode);
       })
       .on("mouseout", function(d) {
+    if (selectedCatalogs.indexOf(d.name) >= 0)
+    	return;
     d3.select('#path-' + d.name.replace(/\./g, '-'))
       .transition()
       .duration(750)
       .style("stroke",function(d) {return color(d.name);})
       .style("stroke-opacity", 0.5)
       .style("stroke-width", 2.0);
+    })
+      .on("click", function(d) {
+    console.debug("click on " + d.name);
+    var dIndex = selectedCatalogs.indexOf(d.name);
+    if (dIndex >= 0) {
+    	selectedCatalogs.splice(dIndex, 1);
+    }
+    else {
+    	selectedCatalogs.push(d.name);
+    }
+    console.debug("selected catalogs: " + selectedCatalogs);
+    for (i = 0; i < selectedCatalogs.length; i++) {
+    	// FIXME: redo this and mouseovers with CSS styles, so as to aoid duplication of same code here and there (up) 
+    	if (selectedCatalogs.indexOf(d.name) >= 0) {
+    		// enable item
+    		d3.select('#path-' + d.name.replace(/\./g, '-'))
+    	       .style("stroke",function(d) {return color(d.name);})
+    	       .style("stroke-opacity", 1.0)
+    	       .style("stroke-width", 2.5);
+    		d3.select('#text-' + d.name.replace(/\./g, '-'))
+ 	           .style("text-decoration", "underline");
+    	}
+    	else {
+    		// disable item
+    		d3.select('#path-' + d.name.replace(/\./g, '-'))
+    	      .transition()
+    	      .duration(750)
+    	      .style("stroke",function(d) {return color(d.name);})
+    	      .style("stroke-opacity", 0.5)
+    	      .style("stroke-width", 2.0);
+    		d3.select('#text-' + d.name.replace(/\./g, '-'))
+	           .style("text-decoration", "none");
+    	}
+    }
+    if (selectedCatalogs.length > 0) {
+    	y.domain([d3.min(sources, function(c) { return d3.min(c.values, function(v) { if ( (selectedCatalogs.indexOf(c.name) >= 0) && (v.date >= x.domain()[0]) && (v.date <= x.domain()[1]) ) { return v.datasetCount; } }); }),
+                  d3.max(sources, function(c) { return d3.max(c.values, function(v) { if ( (selectedCatalogs.indexOf(c.name) >= 0) && (v.date >= x.domain()[0]) && (v.date <= x.domain()[1]) ) { return v.datasetCount; } }); }) ]);
+    }
+    else {
+    	y.domain([d3.min(sources, function(c) { return d3.min(c.values, function(v) { return v.datasetCount; }); }),
+                  d3.max(sources, function(c) { return d3.max(c.values, function(v) { return v.datasetCount; }); }) ]);
+    }
+    focus.selectAll("path.line").attr("d",  function(d) {return line(d.values)});
+    focus.select(".y.axis").call(yAxis);
     })
       .text(function(d) { return d.name; })
       //.attr("font-family","sans-serif")
