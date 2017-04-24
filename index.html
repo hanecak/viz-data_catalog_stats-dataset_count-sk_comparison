@@ -2,6 +2,8 @@
 <!-- based on:
 	http://bl.ocks.org/natemiller/7dec148bb6aab897e561
 	http://bl.ocks.org/natemiller/fd4744a28952627d7150
+special clone of:
+	https://github.com/hanecak/viz-data_catalog_stats-dataset_count
 -->
 <meta charset="utf-8">
 <style>
@@ -40,6 +42,8 @@ svg {
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
  
+var columnSubset = ['data.gov.ro', 'data.gov.sk', 'data.gv.at', 'opendata.government.bg', 'opendata.hu'];
+
 var margin = {top: 10, right: 10, bottom: 100, left: 75},
     margin2 = {top: 430, right: 10, bottom: 20, left: 75},
     width = 960 - margin.left - margin.right,
@@ -95,7 +99,8 @@ var sources = [];
 var selectedCatalogs = [];
 d3.csv("data-catalog-stats-all-dataset_count.csv", function(error, data) {
 
-  color.domain(d3.keys(data[0]).filter(function(key) { return key !== "date"; }));
+  // for SK comparison article we need only subset of columns
+  color.domain(d3.keys(data[0]).filter(function(key) { return columnSubset.indexOf(key) >= 0; }));
  
     data.forEach(function(d) {
       d.date = parseDate(d.date);
