@@ -8,7 +8,7 @@ Suggestions, bug-reports and pull-request are welcome is the [issue tracker](htt
  
 # License
 
-TODO
+MIT License, see [LICENSE](LICENSE) for more details.
 
 # TODO
 
