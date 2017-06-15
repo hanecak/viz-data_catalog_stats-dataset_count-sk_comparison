@@ -36,7 +36,7 @@ svg {
 
 .line {
   fill: none;
-  stroke-width: 1px;
+  stroke-width: 2px;
 }
 
 </style>
@@ -128,7 +128,7 @@ d3.csv("http://hanecak.github.io/data_data-catalog-stats/data-catalog-stats-all-
         .attr("class","line")
         .attr("d", function(d) { return line(d.values); })
         .style("stroke",function(d) {return color(d.name);})
-        .style("stroke-opacity", 0.5)
+        .style("stroke-opacity", 0.9)
       .on("mouseover", function(d){
         d3.select(this)
           .style("stroke",function(d) {return color(d.name);})
@@ -143,8 +143,8 @@ d3.csv("http://hanecak.github.io/data_data-catalog-stats/data-catalog-stats-all-
             .transition()
             .duration(500)
             .style("stroke",function(d) {return color(d.name);})
-            .style("stroke-opacity", 0.5)
-            .style("stroke-width", 1.0)
+            .style("stroke-opacity", 0.9)
+            .style("stroke-width", 2.0)
           })
         .attr("clip-path", "url(#clip)")
         .attr("id", function(d, i) { return "path-" + d.name.replace(/\./g, '-'); });
@@ -171,8 +171,8 @@ d3.csv("http://hanecak.github.io/data_data-catalog-stats/data-catalog-stats-all-
       .transition()
       .duration(500)
       .style("stroke",function(d) {return color(d.name);})
-      .style("stroke-opacity", 0.5)
-      .style("stroke-width", 1.0);
+      .style("stroke-opacity", 0.9)
+      .style("stroke-width", 2.0);
     })
       .on("click", function(d) {
     console.debug("click on " + d.name);
@@ -201,8 +201,8 @@ d3.csv("http://hanecak.github.io/data_data-catalog-stats/data-catalog-stats-all-
     	      .transition()
     	      .duration(500)
     	      .style("stroke",function(d) {return color(d.name);})
-    	      .style("stroke-opacity", 0.5)
-    	      .style("stroke-width", 1.0);
+    	      .style("stroke-opacity", 0.9)
+    	      .style("stroke-width", 2.0);
     		d3.select('#text-' + d.name.replace(/\./g, '-'))
 	           .style("text-decoration", "none");
     	}
