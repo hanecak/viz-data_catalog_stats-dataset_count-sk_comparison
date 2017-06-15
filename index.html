@@ -97,7 +97,7 @@ var context = svg.append("g")
  
 var sources = [];
 var selectedCatalogs = [];
-d3.csv("data-catalog-stats-all-dataset_count.csv", function(error, data) {
+d3.csv("http://hanecak.github.io/data_data-catalog-stats/data-catalog-stats-all-dataset_count.csv", function(error, data) {
 
   color.domain(d3.keys(data[0]).filter(function(key) { return key !== "date"; }));
  
