@@ -38,12 +38,12 @@ svg {
 
 .line {
   fill: none;
-  stroke-width: 1px;
+  stroke-width: 2px;
 }
 
 </style>
 <body>
-<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="https://d3js.org/d3.v3.min.js"></script>
 <script>
  
 var columnSubset = ['data.gov.ro', 'data.gov.sk', 'data.gv.at', 'opendata.government.bg', 'opendata.hu'];
@@ -101,7 +101,7 @@ var context = svg.append("g")
  
 var sources = [];
 var selectedCatalogs = [];
-d3.csv("data-catalog-stats-all-dataset_count.csv", function(error, data) {
+d3.csv("https://hanecak.github.io/data_data-catalog-stats/data-catalog-stats-all-dataset_count.csv", function(error, data) {
 
   // for SK comparison article we need only subset of columns
   color.domain(d3.keys(data[0]).filter(function(key) { return columnSubset.indexOf(key) >= 0; }));
@@ -133,7 +133,7 @@ d3.csv("data-catalog-stats-all-dataset_count.csv", function(error, data) {
         .attr("class","line")
         .attr("d", function(d) { return line(d.values); })
         .style("stroke",function(d) {return color(d.name);})
-        .style("stroke-opacity", 0.5)
+        .style("stroke-opacity", 0.9)
       .on("mouseover", function(d){
         d3.select(this)
           .style("stroke",function(d) {return color(d.name);})
@@ -148,8 +148,8 @@ d3.csv("data-catalog-stats-all-dataset_count.csv", function(error, data) {
             .transition()
             .duration(500)
             .style("stroke",function(d) {return color(d.name);})
-            .style("stroke-opacity", 0.5)
-            .style("stroke-width", 1.0)
+            .style("stroke-opacity", 0.9)
+            .style("stroke-width", 2.0)
           })
         .attr("clip-path", "url(#clip)")
         .attr("id", function(d, i) { return "path-" + d.name.replace(/\./g, '-'); });
@@ -176,8 +176,8 @@ d3.csv("data-catalog-stats-all-dataset_count.csv", function(error, data) {
       .transition()
       .duration(500)
       .style("stroke",function(d) {return color(d.name);})
-      .style("stroke-opacity", 0.5)
-      .style("stroke-width", 1.0);
+      .style("stroke-opacity", 0.9)
+      .style("stroke-width", 2.0);
     })
       .on("click", function(d) {
     console.debug("click on " + d.name);
@@ -206,8 +206,8 @@ d3.csv("data-catalog-stats-all-dataset_count.csv", function(error, data) {
     	      .transition()
     	      .duration(500)
     	      .style("stroke",function(d) {return color(d.name);})
-    	      .style("stroke-opacity", 0.5)
-    	      .style("stroke-width", 1.0);
+    	      .style("stroke-opacity", 0.9)
+    	      .style("stroke-width", 2.0);
     		d3.select('#text-' + d.name.replace(/\./g, '-'))
 	           .style("text-decoration", "none");
     	}
