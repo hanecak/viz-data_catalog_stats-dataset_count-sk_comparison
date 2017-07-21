@@ -2,7 +2,7 @@
 
 [OpenData.sk initiative](http://opendata.sk) is, as part of our activities, among other things monitoring number of datasets (and some other metrics) on various Open Data catalogs (see [the data harvesting script](https://github.com/hanecak/data-catalog-stats) and [collected data](https://github.com/hanecak/data_data-catalog-stats)).
 
-This project contains basic visualization for total dataset counts specifically designed for article comparing Slovakia to some other countries (TODO: link). This project is cloned from [generic visualization](https://github.com/hanecak/viz-data_catalog_stats-dataset_count).
+This project contains basic visualization for total dataset counts specifically designed for article comparing Slovakia to some other countries (https://utopia.sk/wiki/pages/viewpage.action?pageId=69730514). This project is cloned from [generic visualization](https://github.com/hanecak/viz-data_catalog_stats-dataset_count).
 
 Suggestions, bug-reports and pull-request are welcome is the [issue tracker](https://github.com/hanecak/viz-data_catalog_stats-dataset_count-sk_comparison/issues).
  
