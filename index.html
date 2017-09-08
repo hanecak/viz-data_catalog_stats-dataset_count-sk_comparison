@@ -14,13 +14,36 @@ based on https://plot.ly/javascript/getting-started/
 <div id="data-catalog-viz" style="width:900px; height:500px;"></div>
 
 <script>
+var selectorOptions = {
+  buttons: [{
+    step: 'month',
+    stepmode: 'backward',
+    count: 1,
+    label: '1m'
+  }, {
+    step: 'month',
+    stepmode: 'backward',
+    count: 6,
+    label: '6m'
+  }, {
+    step: 'year',
+    stepmode: 'backward',
+    count: 1,
+    label: '1y'
+  }, {
+    step: 'all',
+  }],
+};
+
 Plotly.d3.csv('https://hanecak.github.io/data_data-catalog-stats/data-catalog-stats-all-dataset_count.csv', function(err, rows) {
   var catalogs = [];
   var data = [];
   var layout = {
     title: 'Data Catalog Stats - Dataset Count',
     xaxis: {
-      tickformat: '%Y/%m'
+      tickformat: '%Y/%m',
+      rangeselector: selectorOptions,
+      rangeslider: {}
     },
     yaxis: {
       title: 'Number of datasets'
