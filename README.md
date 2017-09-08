@@ -10,12 +10,13 @@ Suggestions, bug-reports and pull-request are welcome is the [issue tracker](htt
 
 MIT License, see [LICENSE](LICENSE) for more details.
 
+## 3rd party componnts
+
+- [plotly.js](https://plot.ly/javascript/) (MIT)
+
 # TODO
 
-- add LICENSE
-- tip with catalog name if mouse hovers over line, possibly with also a data and value of nearest point
 - selected datacatalogs in URI, to allow deep-linking and sharing of custom selections
-- maybe move captions to the right, like in https://bl.ocks.org/mbostock/3884955
 - ...
 
 # DEV tips
