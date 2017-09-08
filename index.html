@@ -56,7 +56,9 @@ Plotly.d3.csv('https://hanecak.github.io/data_data-catalog-stats/data-catalog-st
   };
   
   for (catalog in rows[0])
-    if (catalog != "date") {
+    // we do also filtering here:
+    // for SK comparison article we need only subset of columns
+    if (catalog != "date" && columnSubset.indexOf(catalog) >= 0) {
       catalogs.push(catalog);
       trace = {
         x:[],
@@ -68,7 +70,6 @@ Plotly.d3.csv('https://hanecak.github.io/data_data-catalog-stats/data-catalog-st
       data.push(trace);
     }
   
-  // FIXME: filer traces based on 'columnSubset'
   for (var i = 0; i < rows.length; i++) {
     for (var j = 0; j < catalogs.length; j++) {
       date = rows[i]['date'];
