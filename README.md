@@ -10,6 +10,10 @@ Suggestions, bug-reports and pull-request are welcome is the [issue tracker](htt
 
 MIT License, see [LICENSE](LICENSE) for more details.
 
+## 3rd party componnts
+
+- [plotly.js](https://plot.ly/javascript/) (MIT)
+
 # DEV notes
 
 - we should maintain only customizations needed for Slovakia comparison article here
