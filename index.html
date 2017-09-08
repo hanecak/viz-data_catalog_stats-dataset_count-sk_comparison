@@ -35,6 +35,7 @@ Plotly.d3.csv('https://hanecak.github.io/data_data-catalog-stats/data-catalog-st
         y:[],
         mode: 'lines',
         name: catalog,
+        connectgaps: true
       };
       data.push(trace);
     }
@@ -45,7 +46,8 @@ Plotly.d3.csv('https://hanecak.github.io/data_data-catalog-stats/data-catalog-st
       data[j].x.push(date.substring(0, 4)
         + '-' + date.substring(4, 6)
         + '-' + date.substring(6));
-      data[j].y.push(rows[i][catalogs[j]]);
+      value = rows[i][catalogs[j]];
+      data[j].y.push((value >= 0) ? value : null);
     }
   }
 
